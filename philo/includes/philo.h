@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:01:30 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/09 15:58:34 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/09 16:40:00 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
+
+typedef struct	s_data
+{
+	int			id;
+	long long	start;
+	pthread_t	philo;
+}	t_data;
 
 int		ft_isdigit(int c);
 int		ft_isnum(char *str);

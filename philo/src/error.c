@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:33:35 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/09 16:06:31 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/09 16:22:41 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 int	print_error(char *error)
 {
-	const char	*msg = \
-	"You are should run\n\
+	const char	*msg;
+
+	msg = "You are should run:\n\
 	./philo number_of_philosophers, time_to_die, time_to_eat, time_to_sleep,\
  [number_of_times_each_philosopher_must_eat]\n\n";
 	write(STDERR_FILENO, msg, ft_strlen(msg));
@@ -25,17 +26,25 @@ int	print_error(char *error)
 
 int	validate_args(char **argv)
 {
-	int	i;
+	int		i;
+	char	*error;
 
 	i = 0;
 	while (argv[i])
 	{
 		if (ft_atol(argv[i]) <= 0 || !ft_isnum(argv[i]))
-			return (print_error("The argument should be a positive number bigger than 0\n"));
+		{
+			error = "The argument should be a positive number bigger than 0\n";
+			return (print_error(error));
+		}
 		if (ft_strlen(argv[i]) > 10 || ft_atol(argv[i]) > INT_MAX)
-			return (print_error("The argument can't be bigger than max int\n"));
+		{
+			error = "The argument can't be bigger than max int\n";
+			return (print_error(error));
+		}
 		i++;
 	}
+	error = NULL;
 	return (0);
 }
 
