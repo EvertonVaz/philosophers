@@ -6,7 +6,7 @@
 #    By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/03 10:31:00 by egeraldo          #+#    #+#              #
-#    Updated: 2024/04/09 14:01:46 by egeraldo         ###   ########.fr        #
+#    Updated: 2024/04/09 15:47:55 by egeraldo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,7 @@ MANDATORY_SOURCES_PATH = ./src/
 INCLUDES_PATH = ./includes/
 
 MANDATORY_SOURCES = \
-	main.c
-
+	main.c error.c utils.c
 
 OBJECTS = $(addprefix $(BIN_PATH), $(MANDATORY_SOURCES:%.c=%.o))
 
