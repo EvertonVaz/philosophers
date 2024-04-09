@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isascii.c                                       :+:      :+:    :+:   */
+/*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/14 20:52:19 by egeraldo          #+#    #+#             */
-/*   Updated: 2023/07/20 14:44:16 by egeraldo         ###   ########.fr       */
+/*   Created: 2024/04/03 11:01:30 by egeraldo          #+#    #+#             */
+/*   Updated: 2024/04/09 11:54:56 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isascii(int c)
+#ifndef PHILOSOPHERS_H
+# define PHILOSOPHERS_H
+
+typedef struct	s_philos
 {
-	if (c >= 0 && c <= 127)
-		return (1);
-	return (0);
-}
+	int	id;
+}	t_philos;
+
+# include <pthread.h>
+# include <sys/time.h>
+# include <unistd.h>
+
+#endif
