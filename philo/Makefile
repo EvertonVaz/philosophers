@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+         #
+#    By: etovaz <etovaz@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/03 10:31:00 by egeraldo          #+#    #+#              #
-#    Updated: 2024/04/09 15:47:55 by egeraldo         ###   ########.fr        #
+#    Updated: 2024/04/09 18:41:21 by etovaz           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ MANDATORY_SOURCES_PATH = ./src/
 INCLUDES_PATH = ./includes/
 
 MANDATORY_SOURCES = \
-	main.c error.c utils.c
+	main.c error.c utils.c routine.c
 
 OBJECTS = $(addprefix $(BIN_PATH), $(MANDATORY_SOURCES:%.c=%.o))
 
