@@ -6,12 +6,12 @@
 #    By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/03 10:31:00 by egeraldo          #+#    #+#              #
-#    Updated: 2024/04/10 16:52:48 by egeraldo         ###   ########.fr        #
+#    Updated: 2024/04/11 16:15:18 by egeraldo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
-CFLAGS = -Wall -Werror -Wextra -g3 -pthread
+CFLAGS = -Wall -Werror -Wextra -g3 -pthread #-fsanitize=thread
 
 # Colors Definition
 BLUE = "\033[34;1m"

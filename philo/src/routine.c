@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 18:34:02 by etovaz            #+#    #+#             */
-/*   Updated: 2024/04/11 14:59:51 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/11 16:31:09 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	take_fork(t_data *philo, t_data *philos, char *msg, long long st)
 		pthread_mutex_lock(&philos[philo->fork.id].fork.fork);
 		if (check_monitor(*monitor))
 			printf(CYAN "%lld, %d %s\n" END, time_ms(st), philo->id, msg);
-		pthread_mutex_lock(&philos[philo->fork.rigth].fork.fork);
+		pthread_mutex_lock(&philos[philo->fork.left].fork.fork);
 		if (check_monitor(*monitor))
 			printf(CYAN "%lld, %d %s\n" END, time_ms(st), philo->id, msg);
 	}
@@ -55,10 +55,12 @@ void	eating(t_data *philo)
 	long long	time;
 	t_data		*philos;
 	t_monitor	*monitor;
+	int			check_eat;
 
 	philos = philosophers(NULL);
 	monitor = monitor_address(NULL);
-	if (!check_monitor(*monitor))
+	check_eat = (philo->max_eat > 0 && philo->n_eat == philo->max_eat);
+	if (!check_monitor(*monitor) || check_eat)
 		return ;
 	take_fork(philo, philos, "has taken a fork", philo->start);
 	philo->time_after_eat = time_ms(0);
@@ -67,6 +69,7 @@ void	eating(t_data *philo)
 	{
 		printf(BLUE "%lld, %d is eating\n" END, time, philo->id);
 		add_eat();
+		philo->n_eat++;
 		usleep(philo->time_to_eat * 1000);
 	}
 	pthread_mutex_unlock(&philos[philo->fork.id].fork.fork);

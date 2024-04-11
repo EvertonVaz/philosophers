@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:01:30 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/11 15:05:42 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/11 15:21:05 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_data
 	long long		time_after_eat;
 	long long		time_to_sleep;
 	int				max_eat;
+	int				n_eat;
 	int				n_philos;
 	t_fork			fork;
 }					t_data;
