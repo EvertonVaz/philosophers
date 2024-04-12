@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:01:30 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/12 15:26:01 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/12 17:16:41 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_monitor
 {
 	pthread_t		monitor;
 	int				everyone_is_alive;
+	int				everyone_is_ate;
 	int				max_eat;
 	pthread_mutex_t	block;
 }					t_monitor;

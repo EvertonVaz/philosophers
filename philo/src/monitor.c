@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:18:57 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/12 16:03:57 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/12 17:21:51 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,15 @@ int	is_somebody_dead(t_monitor *monitor, int i)
 	return (0);
 }
 
+int	everyone_ate(t_monitor *monitor)
+{
+	int ate;
+	pthread_mutex_lock(&monitor->block);
+	ate = monitor->everyone_is_ate;
+	pthread_mutex_unlock(&monitor->block);
+	return (ate >= monitor->max_eat);
+}
+
 void	*monitor_routine(void *data)
 {
 	t_monitor	*monitor;
@@ -67,12 +76,14 @@ void	*monitor_routine(void *data)
 	pthread_mutex_lock(&monitor->block);
 	monitor->everyone_is_alive = 1;
 	pthread_mutex_unlock(&monitor->block);
-	monitor->max_eat = 0;
+	monitor->max_eat = philos->max_eat * philos->n_philos;
 	(void)data;
 	while (1)
 	{
 		i = 0;
 		if (is_somebody_dead(monitor, i))
+			return (NULL);
+		if (everyone_ate(monitor))
 			return (NULL);
 	}
 	return (NULL);
