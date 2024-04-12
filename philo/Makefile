@@ -6,12 +6,12 @@
 #    By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/03 10:31:00 by egeraldo          #+#    #+#              #
-#    Updated: 2024/04/12 09:07:11 by egeraldo         ###   ########.fr        #
+#    Updated: 2024/04/12 11:18:38 by egeraldo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
-CFLAGS = -Wall -Werror -Wextra -g3 -pthread #-fsanitize=thread
+CFLAGS = -Wall -Werror -Wextra -g3 -pthread -fsanitize=thread
 
 # Colors Definition
 BLUE = "\033[34;1m"
@@ -27,7 +27,7 @@ MANDATORY_SOURCES_PATH = ./src/
 INCLUDES_PATH = ./includes/
 
 MANDATORY_SOURCES = \
-	main.c error.c utils.c routine.c philos.c monitor.c mutex.c
+	main.c error.c utils.c philo_routine.c philosophers.c monitor.c fork.c
 
 OBJECTS = $(addprefix $(BIN_PATH), $(MANDATORY_SOURCES:%.c=%.o))
 

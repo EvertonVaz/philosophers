@@ -1,31 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philos.c                                           :+:      :+:    :+:   */
+/*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:06:47 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/12 09:11:43 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/12 11:26:24 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-t_fork	init_fork(int id, int n_philos)
-{
-	t_fork	fork;
 
-	fork.id = id;
-	fork.left = id + 1;
-	fork.rigth = id - 1;
-	if (fork.id == n_philos)
-		fork.left = 1;
-	if (fork.id == 1)
-		fork.rigth = n_philos;
-	pthread_mutex_init(&fork.fork, NULL);
-	return (fork);
-}
 
 t_data	*philosophers(t_data *philos)
 {
@@ -54,6 +41,7 @@ t_data	*init_data(char **argv, int n_philos, long long start)
 		philos[i].max_eat = ft_atol(argv[3]);
 		philos[i].time_after_eat = start;
 		philos[i].n_eat = 0;
+		philos[i].im_dead = 0;
 		philos[i].fork = init_fork(i + 1, n_philos);
 		i++;
 	}
@@ -62,26 +50,23 @@ t_data	*init_data(char **argv, int n_philos, long long start)
 
 void	*philo_routine(void *data)
 {
-	t_monitor	*monitor;
 	t_data		*philo;
 	long long	time;
 
-	monitor = monitor_address(NULL);
 	philo = (t_data *)data;
-	philo->philo = pthread_self();
 	time = time_ms(philo->start);
-	while (check_monitor(*monitor))
+	while (check_philo_alive(philo))
 	{
-		if (check_monitor(*monitor))
+		if (check_philo_alive(philo))
 			eating(philo);
-		if (philo->max_eat > 0 && philo->n_eat == philo->max_eat)
-			return (NULL);
-		if (check_monitor(*monitor) && philo->n_philos > 1)
+		if (check_philo_alive(philo) && philo->n_philos > 1)
 			sleeping(philo);
 		time = time_ms(philo->start);
-		if (check_monitor(*monitor) && philo->n_philos > 1)
+		if (check_philo_alive(philo) && philo->n_philos > 1)
 			printf(GREEN "%lld, %d is thinking\n" END, time, philo->id);
 		usleep(1000);
+		if (philo->max_eat > 0 && philo->n_eat == philo->max_eat)
+			return (NULL);
 	}
 	return (NULL);
 }

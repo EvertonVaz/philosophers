@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:01:30 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/12 09:02:59 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/12 11:13:29 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_data
 	int				max_eat;
 	int				n_eat;
 	int				n_philos;
+	int				im_dead;
 	t_fork			fork;
 }					t_data;
 
@@ -66,7 +67,6 @@ int					check_args(int argc, char **argv);
 long long int		time_ms(long long start);
 void				eating(t_data *philo);
 void				sleeping(t_data *philo);
-t_fork				init_fork(int id, int n_philos);
 t_data				*init_data(char **argv, int n_philos, long long start);
 t_data				*philosophers(t_data *philos);
 void				create_philos(t_data *philos, int n_philos);
@@ -75,5 +75,9 @@ t_monitor			*monitor_address(t_monitor *monitor);
 void				*monitor_routine(void *data);
 int					check_monitor(t_monitor monitor);
 int					check_philo_alive(t_data *philo);
+t_fork				init_fork(int id, int n_philos);
+void				take_fork(t_data *philo, t_data *table);
+int					lock_fork(t_data *philo, pthread_mutex_t *first,
+						pthread_mutex_t *last);
 
 #endif
