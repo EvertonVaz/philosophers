@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 09:01:14 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/12 15:34:47 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/12 18:10:56 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,17 @@ int	lock_fork(t_data *philo, pthread_mutex_t *first, pthread_mutex_t *last)
 	msg = "has taken a fork";
 	t = philo->start;
 	monitor = monitor_address(NULL);
-	if (!check_monitor(monitor))
-		return (0);
-	pthread_mutex_lock(first);
-	if (check_philo_alive(philo))
-		printf(CYAN "%lld, %d %s\n" END, time_ms(t), philo->id, msg);
-	if (philo->n_philos == 1)
-		return (usleep(philo->time_to_die * 1000));
-	pthread_mutex_lock(last);
-	if (check_philo_alive(philo))
-		printf(CYAN "%lld, %d %s\n" END, time_ms(t), philo->id, msg);
+	if (check_monitor(monitor))
+	{
+		pthread_mutex_lock(first);
+		if (check_philo_alive(philo))
+			printf(CYAN "%lld, %d %s\n" END, time_ms(t), philo->id, msg);
+		if (philo->n_philos == 1)
+			return (usleep(philo->time_to_die * 1000));
+		pthread_mutex_lock(last);
+		if (check_philo_alive(philo))
+			printf(CYAN "%lld, %d %s\n" END, time_ms(t), philo->id, msg);
+	}
 	return (0);
 }
 

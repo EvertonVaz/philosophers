@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:18:57 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/12 17:21:51 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/12 17:53:17 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ int	is_somebody_dead(t_monitor *monitor, int i)
 	{
 		if (is_dead(&philos[i]))
 		{
-			usleep(1000);
 			time = time_ms(philos[i].start);
-			printf(RED "%lld, %d died\n" END, time, philos[i].id);
 			pthread_mutex_lock(&monitor->block);
 			monitor->everyone_is_alive = 0;
 			pthread_mutex_unlock(&monitor->block);
+			usleep(1000);
+			printf(RED "%lld, %d died\n" END, time, philos[i].id);
 			return (1);
 		}
 		i++;
@@ -62,7 +62,7 @@ int	everyone_ate(t_monitor *monitor)
 	pthread_mutex_lock(&monitor->block);
 	ate = monitor->everyone_is_ate;
 	pthread_mutex_unlock(&monitor->block);
-	return (ate >= monitor->max_eat);
+	return (monitor->max_eat > 0 && ate >= monitor->max_eat);
 }
 
 void	*monitor_routine(void *data)
@@ -78,6 +78,7 @@ void	*monitor_routine(void *data)
 	pthread_mutex_unlock(&monitor->block);
 	monitor->max_eat = philos->max_eat * philos->n_philos;
 	(void)data;
+	usleep(1000);
 	while (1)
 	{
 		i = 0;
