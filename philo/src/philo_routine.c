@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 18:34:02 by etovaz            #+#    #+#             */
-/*   Updated: 2024/04/12 15:28:13 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/12 16:15:53 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	eating(t_data *philo)
 	table = philosophers(NULL);
 	monitor = monitor_address(NULL);
 	check_eat = (philo->max_eat > 0 && philo->n_eat == philo->max_eat);
+	usleep(1000);
 	if (!check_monitor(monitor) && (!check_philo_alive(philo) || check_eat))
 		return ;
 	taked = take_fork(philo, table);
@@ -58,7 +59,8 @@ void	eating(t_data *philo)
 	if (taked)
 	{
 		pthread_mutex_unlock(&table[philo->fork.id].fork.fork);
-		pthread_mutex_unlock(&table[philo->fork.rigth].fork.fork);
+		if (philo->n_philos > 1)
+			pthread_mutex_unlock(&table[philo->fork.rigth].fork.fork);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:18:57 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/12 13:09:27 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/12 16:03:57 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	is_somebody_dead(t_monitor *monitor, int i)
 	{
 		if (is_dead(&philos[i]))
 		{
-			usleep(1500);
+			usleep(1000);
 			time = time_ms(philos[i].start);
 			printf(RED "%lld, %d died\n" END, time, philos[i].id);
 			pthread_mutex_lock(&monitor->block);
@@ -69,7 +69,6 @@ void	*monitor_routine(void *data)
 	pthread_mutex_unlock(&monitor->block);
 	monitor->max_eat = 0;
 	(void)data;
-	usleep(1000);
 	while (1)
 	{
 		i = 0;

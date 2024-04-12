@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:06:47 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/12 14:48:25 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/12 16:13:55 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	create_philos(t_data *philos, int n_philos)
 	while (i < n_philos)
 	{
 		pthread_create(&philos[i].philo, NULL, philo_routine, &philos[i]);
-		usleep(1000);
 		i++;
 	}
 	i = 0;
