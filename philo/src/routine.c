@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etovaz <etovaz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 18:34:02 by etovaz            #+#    #+#             */
-/*   Updated: 2024/04/11 17:54:37 by etovaz           ###   ########.fr       */
+/*   Updated: 2024/04/11 16:31:09 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,12 @@ void	eating(t_data *philo)
 void	sleeping(t_data *philo)
 {
 	t_monitor	*monitor;
+	long long	start_sleeping;
 	long long	time;
 
 	monitor = monitor_address(NULL);
 	time = time_ms(philo->start);
+	start_sleeping = time_ms(0);
 	if (!check_monitor(*monitor))
 		return ;
 	printf(YELLOW "%lld, %d is sleeping\n" END, time, philo->id);
