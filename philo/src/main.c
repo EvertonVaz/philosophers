@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:00:42 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/12 11:25:21 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/12 12:57:24 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,30 @@ long long int	time_ms(long long start)
 	return (((time.tv_sec * 1000000 + time.tv_usec) / 1000) - start);
 }
 
-int	check_monitor(t_monitor monitor)
+int	check_monitor(t_monitor *monitor)
 {
-	int	i;
+	int	alive;
 
-	pthread_mutex_lock(&monitor.block);
-	i = monitor.everyone_is_alive;
-	pthread_mutex_unlock(&monitor.block);
-	return (i);
+	pthread_mutex_lock(&monitor->block);
+	alive = monitor->everyone_is_alive;
+	pthread_mutex_unlock(&monitor->block);
+	return (alive);
+}
+
+int	print(int choice, long long time, int id)
+{
+	t_monitor	*monitor;
+
+	monitor = monitor_address(NULL);
+	if (choice == FORK && check_monitor(monitor))
+		return(printf(CYAN "%lld, %d has taken a fork\n" END, time, id));
+	if (choice == EAT && check_monitor(monitor))
+		return(printf(BLUE "%lld, %d is eating\n" END, time, id));
+	if (choice == SLEEP && check_monitor(monitor))
+		return(printf(YELLOW "%lld, %d is sleeping\n" END, time, id));
+	if (choice == THINK && check_monitor(monitor))
+		return(printf(GREEN "%lld, %d is thinking\n" END, time, id));
+	return (0);
 }
 
 int	main(int argc, char *argv[])

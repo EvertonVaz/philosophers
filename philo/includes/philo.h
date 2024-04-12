@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:01:30 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/12 11:13:29 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/12 15:26:01 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,15 @@
 # define YELLOW "\033[33;1m"
 # define RED "\033[31;1m"
 # define END "\033[0m"
+
+enum				PRINTS
+{
+	FORK,
+	EAT,
+	SLEEP,
+	THINK,
+	DEAD
+};
 
 typedef struct s_fork
 {
@@ -63,6 +72,7 @@ int					ft_isdigit(int c);
 int					ft_isnum(char *str);
 long				ft_atol(const char *str);
 int					ft_strlen(const char *s);
+int					print(int choice, long long time, int id);
 int					check_args(int argc, char **argv);
 long long int		time_ms(long long start);
 void				eating(t_data *philo);
@@ -73,11 +83,12 @@ void				create_philos(t_data *philos, int n_philos);
 int					is_alive(t_data *philo);
 t_monitor			*monitor_address(t_monitor *monitor);
 void				*monitor_routine(void *data);
-int					check_monitor(t_monitor monitor);
+int					check_monitor(t_monitor *monitor);
 int					check_philo_alive(t_data *philo);
 t_fork				init_fork(int id, int n_philos);
-void				take_fork(t_data *philo, t_data *table);
+int					take_fork(t_data *philo, t_data *table);
 int					lock_fork(t_data *philo, pthread_mutex_t *first,
 						pthread_mutex_t *last);
+void				add_eat(t_data *philo);
 
 #endif

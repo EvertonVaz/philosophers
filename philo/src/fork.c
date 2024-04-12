@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mutex.c                                            :+:      :+:    :+:   */
+/*   fork.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 09:01:14 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/12 10:53:31 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/12 15:34:47 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,17 @@ t_fork	init_fork(int id, int n_philos)
 	return (fork);
 }
 
-void	take_fork(t_data *philo, t_data *table)
-{
-	pthread_mutex_t	*right;
-	pthread_mutex_t	*left;
-
-	right = &table[philo->fork.rigth].fork.fork;
-	left = &table[philo->fork.id].fork.fork;
-	if (philo->id % 2 == 1 && check_philo_alive(philo))
-		lock_fork(philo, right, left);
-	else if (check_philo_alive(philo))
-		lock_fork(philo, left, right);
-}
-
 int	lock_fork(t_data *philo, pthread_mutex_t *first, pthread_mutex_t *last)
 {
+	t_monitor	*monitor;
 	long long	t;
 	char		*msg;
 
 	msg = "has taken a fork";
 	t = philo->start;
+	monitor = monitor_address(NULL);
+	if (!check_monitor(monitor))
+		return (0);
 	pthread_mutex_lock(first);
 	if (check_philo_alive(philo))
 		printf(CYAN "%lld, %d %s\n" END, time_ms(t), philo->id, msg);
@@ -56,4 +47,22 @@ int	lock_fork(t_data *philo, pthread_mutex_t *first, pthread_mutex_t *last)
 	if (check_philo_alive(philo))
 		printf(CYAN "%lld, %d %s\n" END, time_ms(t), philo->id, msg);
 	return (0);
+}
+
+int	take_fork(t_data *philo, t_data *table)
+{
+	t_monitor		*monitor;
+	pthread_mutex_t	*right;
+	pthread_mutex_t	*left;
+
+	monitor = monitor_address(NULL);
+	if (!monitor->everyone_is_alive)
+		return (0);
+	right = &table[philo->fork.rigth].fork.fork;
+	left = &table[philo->fork.id].fork.fork;
+	if (philo->id % 2 == 1 && check_philo_alive(philo))
+		lock_fork(philo, right, left);
+	else if (check_philo_alive(philo))
+		lock_fork(philo, left, right);
+	return (1);
 }

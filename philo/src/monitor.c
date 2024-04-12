@@ -6,22 +6,22 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:18:57 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/12 11:24:27 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/12 13:09:27 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int	is_alive(t_data *philo)
+int	is_dead(t_data *philo)
 {
+	int			is_dead;
 	t_monitor	*monitor;
-	int			is_alive;
 
 	monitor = monitor_address(NULL);
 	pthread_mutex_lock(&monitor->block);
-	is_alive = philo->im_dead;
+	is_dead = philo->im_dead;
 	pthread_mutex_unlock(&monitor->block);
-	return (is_alive);
+	return (is_dead);
 }
 
 t_monitor	*monitor_address(t_monitor *monitor)
@@ -41,10 +41,9 @@ int	is_somebody_dead(t_monitor *monitor, int i)
 	philos = philosophers(NULL);
 	while (i < philos[0].n_philos)
 	{
-		printf("verificando se alguem morreu\n");
-		if (!is_alive(&philos[i]))
+		if (is_dead(&philos[i]))
 		{
-			printf("philo %d morreu", philos->id);
+			usleep(1500);
 			time = time_ms(philos[i].start);
 			printf(RED "%lld, %d died\n" END, time, philos[i].id);
 			pthread_mutex_lock(&monitor->block);
@@ -65,10 +64,12 @@ void	*monitor_routine(void *data)
 
 	philos = philosophers(NULL);
 	monitor = monitor_address(NULL);
+	pthread_mutex_lock(&monitor->block);
 	monitor->everyone_is_alive = 1;
+	pthread_mutex_unlock(&monitor->block);
 	monitor->max_eat = 0;
 	(void)data;
-	usleep(2000);
+	usleep(1000);
 	while (1)
 	{
 		i = 0;
