@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: etovaz <etovaz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:18:57 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/12 17:53:17 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/13 20:06:45 by etovaz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,14 @@ int	is_somebody_dead(t_monitor *monitor, int i)
 	{
 		if (is_dead(&philos[i]))
 		{
-			time = time_ms(philos[i].start);
 			pthread_mutex_lock(&monitor->block);
 			monitor->everyone_is_alive = 0;
 			pthread_mutex_unlock(&monitor->block);
 			usleep(1000);
+			pthread_mutex_lock(&philos[i].fork.fork);
+			time = time_ms(philos[i].start);
 			printf(RED "%lld, %d died\n" END, time, philos[i].id);
+			pthread_mutex_unlock(&philos[i].fork.fork);
 			return (1);
 		}
 		i++;

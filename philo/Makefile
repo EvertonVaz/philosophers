@@ -6,12 +6,12 @@
 #    By: etovaz <etovaz@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/03 10:31:00 by egeraldo          #+#    #+#              #
-#    Updated: 2024/04/13 19:44:11 by etovaz           ###   ########.fr        #
+#    Updated: 2024/04/13 20:12:58 by etovaz           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
-CFLAGS = -Wall -Werror -Wextra -g3 -pthread -fsanitize=thread
+CFLAGS = -Wall -Werror -Wextra -g3 -pthread #-fsanitize=thread
 
 # Colors Definition
 BLUE = "\033[34;1m"
