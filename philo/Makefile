@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+         #
+#    By: etovaz <etovaz@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/03 10:31:00 by egeraldo          #+#    #+#              #
-#    Updated: 2024/04/12 18:01:02 by egeraldo         ###   ########.fr        #
+#    Updated: 2024/04/13 19:41:57 by etovaz           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
-CFLAGS = -Wall -Werror -Wextra -g3 -pthread -fsanitize=thread
+CFLAGS = -Wall -Werror -Wextra -g3 -pthread #-fsanitize=address
 
 # Colors Definition
 BLUE = "\033[34;1m"
@@ -35,14 +35,14 @@ all: $(BIN_PATH) $(NAME)
 
 $(BIN_PATH)%.o: $(MANDATORY_SOURCES_PATH)%.c
 	@echo $(BLUE)[Compiling philosophers]$(COLOR_LIMITER) $(WHITE)$(notdir $(<))$(COLOR_LIMITER)
-	@$(CC) $(CFLAGS) -c $< -o $@ -I $(INCLUDES_PATH)
+	@clang-12 $(CFLAGS) -c $< -o $@ -I $(INCLUDES_PATH)
 	@echo " "
 
 $(NAME): $(OBJECTS)
 	@echo $(CYAN)" --------------------------------------------------"$(COLOR_LIMITER)
 	@echo $(CYAN)"| PHILOSOPHERS executable was created successfully!! |"$(COLOR_LIMITER)
 	@echo $(CYAN)"--------------------------------------------------"$(COLOR_LIMITER)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJECTS)
+	@clang-12 $(CFLAGS) -o $(NAME) $(OBJECTS)
 	@echo " "
 
 $(BIN_PATH):

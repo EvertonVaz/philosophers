@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fork.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: etovaz <etovaz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 09:01:14 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/12 18:10:56 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/13 19:26:23 by etovaz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,14 @@ int	lock_fork(t_data *philo, pthread_mutex_t *first, pthread_mutex_t *last)
 		if (check_philo_alive(philo))
 			printf(CYAN "%lld, %d %s\n" END, time_ms(t), philo->id, msg);
 		if (philo->n_philos == 1)
-			return (usleep(philo->time_to_die * 1000));
+		{
+			usleep(philo->time_to_die * 1000);
+			return (0);
+		}
 		pthread_mutex_lock(last);
 		if (check_philo_alive(philo))
 			printf(CYAN "%lld, %d %s\n" END, time_ms(t), philo->id, msg);
+		return (1);
 	}
 	return (0);
 }
@@ -62,8 +66,8 @@ int	take_fork(t_data *philo, t_data *table)
 	right = &table[philo->fork.rigth].fork.fork;
 	left = &table[philo->fork.id].fork.fork;
 	if (philo->id % 2 == 1 && check_philo_alive(philo))
-		lock_fork(philo, right, left);
+		return (lock_fork(philo, right, left));
 	else if (check_philo_alive(philo))
-		lock_fork(philo, left, right);
-	return (1);
+		return (lock_fork(philo, left, right));
+	return (0);
 }

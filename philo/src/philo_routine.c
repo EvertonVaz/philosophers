@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: etovaz <etovaz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 18:34:02 by etovaz            #+#    #+#             */
-/*   Updated: 2024/04/12 17:58:45 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/13 19:30:21 by etovaz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+int	wait_all_philos(t_monitor *monitor, int new_philo, int n_philos)
+{
+	static int philo_created;
+
+	pthread_mutex_lock(&monitor->block);
+	philo_created += new_philo;
+	pthread_mutex_unlock(&monitor->block);
+	if (philo_created <= n_philos)
+		return (0);
+	return (1);
+}
 
 int	check_philo_alive(t_data *philo)
 {
@@ -30,16 +42,17 @@ void	add_eat(t_data *philo)
 
 	monitor = monitor_address(NULL);
 
-	if (!check_monitor(monitor))
-		return ;
 	philo->time_after_eat = time_ms(0);
-	printf(BLUE "%lld, %d is eating\n" END, time_ms(philo->start), philo->id);
-	pthread_mutex_lock(&monitor->block);
-	monitor->everyone_is_ate++;
-	pthread_mutex_unlock(&monitor->block);
-	philo->n_eat++;
-	usleep(philo->time_to_eat * 1000);
-	philo->time_after_eat = time_ms(0);
+	if (check_philo_alive(philo))
+	{
+		printf(BLUE "%lld, %d is eating\n" END, time_ms(philo->start), philo->id);
+		pthread_mutex_lock(&monitor->block);
+		monitor->everyone_is_ate++;
+		pthread_mutex_unlock(&monitor->block);
+		philo->n_eat++;
+		usleep(philo->time_to_eat * 1000);
+		philo->time_after_eat = time_ms(0);
+	}
 }
 
 void	eating(t_data *philo)
@@ -57,7 +70,7 @@ void	eating(t_data *philo)
 	if (!check_monitor(monitor) && (!check_philo_alive(philo) || check_eat))
 		return ;
 	taked = take_fork(philo, table);
-	if (check_philo_alive(philo) && philo->n_philos > 1)
+	if (taked && check_philo_alive(philo) && philo->n_philos > 1)
 		add_eat(philo);
 	if (taked)
 	{
