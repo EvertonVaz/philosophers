@@ -6,7 +6,7 @@
 /*   By: etovaz <etovaz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:18:57 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/13 20:27:23 by etovaz           ###   ########.fr       */
+/*   Updated: 2024/04/13 21:50:48 by etovaz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,24 +35,22 @@ t_monitor	*monitor_address(t_monitor *monitor)
 
 int	is_somebody_dead(t_monitor *monitor, int i)
 {
-	t_data		*philos;
+	t_data		*table;
 	long long	time;
 	int			id;
 
-	philos = philosophers(NULL);
-	while (i < philos[0].n_philos)
+	table = philosophers(NULL);
+	while (i < table[0].n_philos)
 	{
-		if (is_dead(&philos[i]))
+		if (is_dead(&table[i]))
 		{
 			pthread_mutex_lock(&monitor->block);
 			monitor->everyone_is_alive = 0;
+			time = time_ms(table[i].start);
+			id = table[i].id;
+			printf(RED "%lld, %d died\n" END, time, id);
 			pthread_mutex_unlock(&monitor->block);
 			usleep(1000);
-			pthread_mutex_lock(&philos[i].fork.fork);
-			time = time_ms(philos[i].start);
-			id = philos[i].id;
-			printf(RED "%lld, %d died\n" END, time, id);
-			pthread_mutex_unlock(&philos[i].fork.fork);
 			return (1);
 		}
 		i++;
@@ -72,17 +70,18 @@ int	everyone_ate(t_monitor *monitor)
 void	*monitor_routine(void *data)
 {
 	t_monitor	*monitor;
-	t_data		*philos;
+	t_data		*table;
 	int			i;
 
-	philos = philosophers(NULL);
+	table = philosophers(NULL);
 	monitor = monitor_address(NULL);
 	pthread_mutex_lock(&monitor->block);
 	monitor->everyone_is_alive = 1;
 	pthread_mutex_unlock(&monitor->block);
-	monitor->max_eat = philos->max_eat * philos->n_philos;
+	monitor->max_eat = table->max_eat * table->n_philos;
 	(void)data;
-	usleep(1000);
+	while (wait_all_philos(monitor, 0, table->n_philos))
+		usleep(5000);
 	while (1)
 	{
 		i = 0;

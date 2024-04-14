@@ -6,7 +6,7 @@
 /*   By: etovaz <etovaz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:06:47 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/13 19:31:29 by etovaz           ###   ########.fr       */
+/*   Updated: 2024/04/13 22:09:10 by etovaz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	*philo_routine(void *data)
 	philo = (t_data *)data;
 	time = time_ms(philo->start);
 	while (wait_all_philos(monitor, 1, philo->n_philos))
-		;
+		usleep(10000);
 	philo->start = time_ms(0);
 	while (check_philo_alive(philo))
 	{
@@ -84,6 +84,7 @@ void	create_philos(t_data *philos, int n_philos)
 	while (i < n_philos)
 	{
 		pthread_create(&philos[i].philo, NULL, philo_routine, &philos[i]);
+		usleep(1000);
 		i++;
 	}
 	i = 0;
