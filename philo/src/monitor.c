@@ -6,7 +6,7 @@
 /*   By: etovaz <etovaz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:18:57 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/13 20:06:45 by etovaz           ###   ########.fr       */
+/*   Updated: 2024/04/13 20:27:23 by etovaz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	is_somebody_dead(t_monitor *monitor, int i)
 {
 	t_data		*philos;
 	long long	time;
+	int			id;
 
 	philos = philosophers(NULL);
 	while (i < philos[0].n_philos)
@@ -49,7 +50,8 @@ int	is_somebody_dead(t_monitor *monitor, int i)
 			usleep(1000);
 			pthread_mutex_lock(&philos[i].fork.fork);
 			time = time_ms(philos[i].start);
-			printf(RED "%lld, %d died\n" END, time, philos[i].id);
+			id = philos[i].id;
+			printf(RED "%lld, %d died\n" END, time, id);
 			pthread_mutex_unlock(&philos[i].fork.fork);
 			return (1);
 		}
