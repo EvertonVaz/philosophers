@@ -6,7 +6,7 @@
 /*   By: etovaz <etovaz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 18:34:02 by etovaz            #+#    #+#             */
-/*   Updated: 2024/04/13 19:30:21 by etovaz           ###   ########.fr       */
+/*   Updated: 2024/04/21 12:21:44 by etovaz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 int	wait_all_philos(t_monitor *monitor, int new_philo, int n_philos)
 {
-	static int philo_created;
+	static int	philo_created;
 
 	pthread_mutex_lock(&monitor->block);
 	philo_created += new_philo;
+	usleep(100);
 	pthread_mutex_unlock(&monitor->block);
 	if (philo_created <= n_philos)
 		return (0);
@@ -33,7 +34,7 @@ int	check_philo_alive(t_data *philo)
 	if (time_ms(philo->time_after_eat) > philo->time_to_die)
 		philo->im_dead = 1;
 	pthread_mutex_unlock(&monitor->block);
-	return (time_ms(philo->time_after_eat) < philo->time_to_die);
+	return (time_ms(philo->time_after_eat) < philo->time_to_die && monitor->everyone_is_alive);
 }
 
 void	add_eat(t_data *philo)
@@ -41,11 +42,11 @@ void	add_eat(t_data *philo)
 	t_monitor	*monitor;
 
 	monitor = monitor_address(NULL);
-
 	philo->time_after_eat = time_ms(0);
 	if (check_philo_alive(philo))
 	{
-		printf(BLUE "%lld, %d is eating\n" END, time_ms(philo->start), philo->id);
+		printf(BLUE "%lld, %d is eating\n" END, time_ms(philo->start),
+			philo->id);
 		pthread_mutex_lock(&monitor->block);
 		monitor->everyone_is_ate++;
 		pthread_mutex_unlock(&monitor->block);
@@ -87,6 +88,7 @@ void	sleeping(t_data *philo)
 
 	monitor = monitor_address(NULL);
 	time = time_ms(philo->start);
+	usleep(1000);
 	if (!check_monitor(monitor) || !check_philo_alive(philo))
 		return ;
 	printf(YELLOW "%lld, %d is sleeping\n" END, time, philo->id);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: etovaz <etovaz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:00:42 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/12 16:07:26 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/21 12:19:53 by etovaz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	main(int argc, char *argv[])
 	n_philos = ft_atol(argv[1]);
 	philos = init_data(&argv[2], n_philos, time_ms(0));
 	pthread_create(&monitor->monitor, NULL, monitor_routine, &n_philos);
+	usleep(10);
 	create_philos(philos, n_philos);
 	pthread_join(monitor->monitor, NULL);
 	free(monitor);
