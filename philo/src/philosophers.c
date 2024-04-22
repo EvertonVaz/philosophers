@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etovaz <etovaz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:06:47 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/21 12:23:51 by etovaz           ###   ########.fr       */
+/*   Updated: 2024/04/22 16:51:26 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	*philo_routine(void *data)
 		if (check_monitor(monitor) && check_philo_alive(philo)
 			&& philo->n_philos > 1)
 			printf(GREEN "%lld, %d is thinking\n" END, time, philo->id);
-		usleep(1000);
 		if (philo->max_eat > 0 && philo->n_eat == philo->max_eat)
 			return (NULL);
 	}

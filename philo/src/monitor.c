@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etovaz <etovaz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:18:57 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/14 15:21:01 by etovaz           ###   ########.fr       */
+/*   Updated: 2024/04/22 16:58:22 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	*monitor_routine(void *data)
 
 	table = philosophers(NULL);
 	monitor = monitor_address(NULL);
+	monitor->everyone_is_ate = 0;
 	pthread_mutex_lock(&monitor->block);
 	monitor->everyone_is_alive = 1;
 	pthread_mutex_unlock(&monitor->block);

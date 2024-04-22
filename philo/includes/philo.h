@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etovaz <etovaz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:01:30 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/14 14:56:59 by etovaz           ###   ########.fr       */
+/*   Updated: 2024/04/22 16:59:07 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,6 @@
 # define YELLOW "\033[33;1m"
 # define RED "\033[31;1m"
 # define END "\033[0m"
-
-enum				e_prints
-{
-	FORK,
-	EAT,
-	SLEEP,
-	THINK,
-	DEAD
-};
 
 typedef struct s_fork
 {
