@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fork.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etovaz <etovaz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 09:01:14 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/21 12:01:53 by etovaz           ###   ########.fr       */
+/*   Updated: 2024/04/22 17:03:15 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_fork	init_fork(int id, int n_philos)
 		fork.left = 1;
 	if (fork.id == 1)
 		fork.rigth = n_philos;
-	pthread_mutex_init(&fork.fork, NULL);
+	pthread_mutex_init(&fork.mutex, NULL);
 	return (fork);
 }
 
@@ -63,8 +63,8 @@ int	take_fork(t_data *philo, t_data *table)
 	monitor = monitor_address(NULL);
 	if (!monitor->everyone_is_alive)
 		return (0);
-	right = &table[philo->fork.rigth].fork.fork;
-	left = &table[philo->fork.id].fork.fork;
+	right = &table[philo->fork.rigth].fork.mutex;
+	left = &table[philo->fork.id].fork.mutex;
 	if (philo->id % 2 == 1 && check_philo_alive(philo))
 		return (lock_fork(philo, right, left));
 	else if (check_philo_alive(philo))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etovaz <etovaz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 18:34:02 by etovaz            #+#    #+#             */
-/*   Updated: 2024/04/21 12:21:44 by etovaz           ###   ########.fr       */
+/*   Updated: 2024/04/22 17:03:32 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ void	eating(t_data *philo)
 		add_eat(philo);
 	if (taked)
 	{
-		pthread_mutex_unlock(&table[philo->fork.id].fork.fork);
+		pthread_mutex_unlock(&table[philo->fork.id].fork.mutex);
 		if (philo->n_philos > 1)
-			pthread_mutex_unlock(&table[philo->fork.rigth].fork.fork);
+			pthread_mutex_unlock(&table[philo->fork.rigth].fork.mutex);
 	}
 }
 

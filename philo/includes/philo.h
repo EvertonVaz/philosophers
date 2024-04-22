@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:01:30 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/22 16:59:07 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/22 17:02:52 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct s_fork
 	int				id;
 	int				left;
 	int				rigth;
-	pthread_mutex_t	fork;
+	pthread_mutex_t	mutex;
 }					t_fork;
 
 typedef struct s_monitor
