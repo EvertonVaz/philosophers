@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 18:34:02 by etovaz            #+#    #+#             */
-/*   Updated: 2024/04/22 17:03:32 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/23 09:42:15 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ void	eating(t_data *philo)
 		add_eat(philo);
 	if (taked)
 	{
-		pthread_mutex_unlock(&table[philo->fork.id].fork.mutex);
+		pthread_mutex_unlock(&table[philo->id].mutex);
 		if (philo->n_philos > 1)
-			pthread_mutex_unlock(&table[philo->fork.rigth].fork.mutex);
+			pthread_mutex_unlock(&table[philo->rigth].mutex);
 	}
 }
 

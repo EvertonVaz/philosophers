@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:01:30 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/22 17:02:52 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/23 09:23:28 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,6 @@
 # define YELLOW "\033[33;1m"
 # define RED "\033[31;1m"
 # define END "\033[0m"
-
-typedef struct s_fork
-{
-	int				id;
-	int				left;
-	int				rigth;
-	pthread_mutex_t	mutex;
-}					t_fork;
 
 typedef struct s_monitor
 {
@@ -57,7 +49,8 @@ typedef struct s_data
 	int				n_eat;
 	int				n_philos;
 	int				im_dead;
-	t_fork			fork;
+	int				rigth;
+	pthread_mutex_t	mutex;
 }					t_data;
 
 int					ft_isdigit(int c);
@@ -79,7 +72,6 @@ t_monitor			*monitor_address(t_monitor *monitor);
 void				*monitor_routine(void *data);
 int					check_monitor(t_monitor *monitor);
 int					check_philo_alive(t_data *philo);
-t_fork				init_fork(int id, int n_philos);
 int					take_fork(t_data *philo, t_data *table);
 int					lock_fork(t_data *philo, pthread_mutex_t *first,
 						pthread_mutex_t *last);

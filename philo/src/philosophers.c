@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:06:47 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/22 16:51:26 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/23 09:36:17 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,11 @@ t_data	*init_data(char **argv, int n_philos, long long start)
 		table[i].time_after_eat = start;
 		table[i].n_eat = 0;
 		table[i].im_dead = 0;
-		table[i].fork = init_fork(i + 1, n_philos);
+		table[i].rigth = i;
+		if (table[i].id == 1)
+			table[i].rigth = n_philos;
+		if(pthread_mutex_init(&table[i].mutex, NULL) != 0)
+			printf("\n id: %d mutex not init \n", i + 1);
 		i++;
 	}
 	return (philosophers(table));

@@ -6,26 +6,11 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 09:01:14 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/22 17:03:15 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/23 09:30:16 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
-
-t_fork	init_fork(int id, int n_philos)
-{
-	t_fork	fork;
-
-	fork.id = id;
-	fork.left = id + 1;
-	fork.rigth = id - 1;
-	if (fork.id == n_philos)
-		fork.left = 1;
-	if (fork.id == 1)
-		fork.rigth = n_philos;
-	pthread_mutex_init(&fork.mutex, NULL);
-	return (fork);
-}
 
 int	lock_fork(t_data *philo, pthread_mutex_t *first, pthread_mutex_t *last)
 {
@@ -63,8 +48,8 @@ int	take_fork(t_data *philo, t_data *table)
 	monitor = monitor_address(NULL);
 	if (!monitor->everyone_is_alive)
 		return (0);
-	right = &table[philo->fork.rigth].fork.mutex;
-	left = &table[philo->fork.id].fork.mutex;
+	right = &table[philo->rigth].mutex;
+	left = &table[philo->id].mutex;
 	if (philo->id % 2 == 1 && check_philo_alive(philo))
 		return (lock_fork(philo, right, left));
 	else if (check_philo_alive(philo))
