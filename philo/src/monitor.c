@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:18:57 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/23 09:54:00 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/23 10:26:54 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	is_dead(t_data *philo)
 
 	monitor = monitor_address(NULL);
 	pthread_mutex_lock(&monitor->block);
-	is_dead = philo->im_dead;
+	is_dead = time_ms(philo->time_after_eat) > philo->time_to_die;
 	pthread_mutex_unlock(&monitor->block);
 	return (is_dead);
 }

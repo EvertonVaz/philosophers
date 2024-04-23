@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 18:34:02 by etovaz            #+#    #+#             */
-/*   Updated: 2024/04/23 09:54:37 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/23 10:37:18 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,16 @@
 int	check_philo_alive(t_data *philo)
 {
 	t_monitor	*monitor;
+	int			result;
 
 	monitor = monitor_address(NULL);
 	pthread_mutex_lock(&monitor->block);
 	if (time_ms(philo->time_after_eat) > philo->time_to_die)
 		philo->im_dead = 1;
+	result = time_ms(philo->time_after_eat) < philo->time_to_die
+		&& monitor->everyone_is_alive;
 	pthread_mutex_unlock(&monitor->block);
-	return (time_ms(philo->time_after_eat) < philo->time_to_die && monitor->everyone_is_alive);
+	return (result);
 }
 
 void	add_eat(t_data *philo)
@@ -29,17 +32,19 @@ void	add_eat(t_data *philo)
 	t_monitor	*monitor;
 
 	monitor = monitor_address(NULL);
+	pthread_mutex_lock(&monitor->block);
 	philo->time_after_eat = time_ms(0);
+	pthread_mutex_unlock(&monitor->block);
 	if (check_philo_alive(philo))
 	{
 		printf(BLUE "%lld, %d is eating\n" END, time_ms(philo->start),
 			philo->id);
 		pthread_mutex_lock(&monitor->block);
 		monitor->everyone_is_ate++;
-		pthread_mutex_unlock(&monitor->block);
 		philo->n_eat++;
-		usleep(philo->time_to_eat * 1000);
 		philo->time_after_eat = time_ms(0);
+		pthread_mutex_unlock(&monitor->block);
+		usleep(philo->time_to_eat * 1000);
 	}
 }
 
@@ -54,7 +59,6 @@ void	eating(t_data *philo)
 	table = philosophers(NULL);
 	monitor = monitor_address(NULL);
 	check_eat = (philo->max_eat > 0 && philo->n_eat == philo->max_eat);
-	usleep(1000);
 	if (!check_monitor(monitor) && (!check_philo_alive(philo) || check_eat))
 		return ;
 	taked = take_fork(philo, table);
@@ -75,7 +79,6 @@ void	sleeping(t_data *philo)
 
 	monitor = monitor_address(NULL);
 	time = time_ms(philo->start);
-	usleep(1000);
 	if (!check_monitor(monitor) || !check_philo_alive(philo))
 		return ;
 	printf(YELLOW "%lld, %d is sleeping\n" END, time, philo->id);
