@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:06:47 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/23 17:47:40 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/23 18:18:11 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,12 @@ void	*philo_routine(void *data)
 	time = time_ms(0);
 	while (check_philo_alive(philo))
 	{
-		if (check_philo_alive(philo))
+		if (check_monitor(monitor) && check_philo_alive(philo))
 			eating(philo);
 		if ((philo->max_eat > 0 && philo->n_eat == philo->max_eat)
 			|| philo->n_philos <= 1)
 			return (NULL);
-		if (check_philo_alive(philo))
+		if (check_monitor(monitor) && check_philo_alive(philo))
 			sleeping(philo);
 		time = time_ms(philo->start);
 		if (check_monitor(monitor) && check_philo_alive(philo))

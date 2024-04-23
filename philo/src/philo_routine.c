@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 18:34:02 by etovaz            #+#    #+#             */
-/*   Updated: 2024/04/23 17:46:10 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/23 18:10:19 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,9 @@ void	add_eat(t_data *philo)
 void	eating(t_data *philo)
 {
 	t_data		*table;
-	t_monitor	*monitor;
-	int			check_eat;
 	int			taked;
 
 	table = philosophers(NULL);
-	monitor = monitor_address(NULL);
-	check_eat = (philo->max_eat > 0 && philo->n_eat == philo->max_eat);
-	if (!check_monitor(monitor) && (!check_philo_alive(philo) || check_eat))
-		return ;
 	taked = take_fork(philo, table);
 	if (taked && check_philo_alive(philo) && philo->n_philos > 1)
 		add_eat(philo);

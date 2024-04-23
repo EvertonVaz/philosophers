@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:00:42 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/23 17:44:03 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/23 17:59:18 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,18 @@ long long int	time_ms(long long start)
 	return (((time.tv_sec * 1000000 + time.tv_usec) / 1000) - start);
 }
 
+int	check_monitor(t_monitor *monitor)
+{
+	int	alive;
+
+	pthread_mutex_lock(&monitor->block);
+	alive = monitor->everyone_is_alive;
+	pthread_mutex_unlock(&monitor->block);
+	return (alive);
+}
+
 void	print_logs(t_data *philo, char *msg)
 {
-	t_monitor	*monitor;
-
-
-	monitor = monitor_address(NULL);
 	pthread_mutex_lock(&philo->print);
 	printf("%lld %d %s\n", time_ms(philo->start), philo->id, msg);
 	pthread_mutex_unlock(&philo->print);
