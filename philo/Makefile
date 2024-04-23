@@ -6,7 +6,7 @@
 #    By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/03 10:31:00 by egeraldo          #+#    #+#              #
-#    Updated: 2024/04/23 13:55:48 by egeraldo         ###   ########.fr        #
+#    Updated: 2024/04/23 14:29:19 by egeraldo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ clean:
 
 fclean: clean
 	@echo $(RED)[Removing $(NAME) executable]$(COLOR_LIMITER)
-	@rm $(NAME)
+	@rm -rf $(NAME)
 
 re: fclean
 	@make --no-print-directory

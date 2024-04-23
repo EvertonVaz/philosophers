@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:18:57 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/23 14:09:23 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:39:46 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	is_somebody_dead(t_monitor *monitor)
 			monitor->everyone_is_alive = 0;
 			time = time_ms(table[i].start);
 			id = table[i].id;
-			printf(RED "%lld, %d died\n" END, time, id);
+			printf(RED "%lld %d died\n" END, time, id);
 			pthread_mutex_unlock(&monitor->block);
 			return (1);
 		}

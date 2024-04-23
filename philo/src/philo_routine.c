@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 18:34:02 by etovaz            #+#    #+#             */
-/*   Updated: 2024/04/23 14:01:33 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:40:06 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	add_eat(t_data *philo)
 	pthread_mutex_unlock(&monitor->block);
 	if (check_philo_alive(philo))
 	{
-		printf(BLUE "%lld, %d is eating\n" END, time_ms(philo->start),
+		printf(BLUE "%lld %d is eating\n" END, time_ms(philo->start),
 			philo->id);
 		pthread_mutex_lock(&monitor->block);
 		monitor->everyone_is_ate++;
@@ -84,6 +84,6 @@ void	sleeping(t_data *philo)
 	time = time_ms(philo->start);
 	if (!check_monitor(monitor) || !check_philo_alive(philo))
 		return ;
-	printf(YELLOW "%lld, %d is sleeping\n" END, time, philo->id);
+	printf(YELLOW "%lld %d is sleeping\n" END, time, philo->id);
 	usleep(philo->time_to_sleep * 1000);
 }

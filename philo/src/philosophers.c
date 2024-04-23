@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:06:47 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/23 14:12:26 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:51:26 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	*philo_routine(void *data)
 		time = time_ms(philo->start);
 		if (check_monitor(monitor) && check_philo_alive(philo)
 			&& philo->n_philos > 1)
-			printf(GREEN "%lld, %d is thinking\n" END, time, philo->id);
+			printf(GREEN "%lld %d is thinking\n" END, time, philo->id);
 	}
 	return (NULL);
 }
