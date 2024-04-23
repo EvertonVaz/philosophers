@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 18:34:02 by etovaz            #+#    #+#             */
-/*   Updated: 2024/04/23 15:40:06 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/23 17:46:10 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ void	add_eat(t_data *philo)
 	pthread_mutex_unlock(&monitor->block);
 	if (check_philo_alive(philo))
 	{
-		printf(BLUE "%lld %d is eating\n" END, time_ms(philo->start),
-			philo->id);
+		print_logs(philo, EATING);
 		pthread_mutex_lock(&monitor->block);
 		monitor->everyone_is_ate++;
 		philo->n_eat++;
@@ -58,7 +57,6 @@ void	eating(t_data *philo)
 	int			check_eat;
 	int			taked;
 
-	taked = 0;
 	table = philosophers(NULL);
 	monitor = monitor_address(NULL);
 	check_eat = (philo->max_eat > 0 && philo->n_eat == philo->max_eat);
@@ -67,11 +65,11 @@ void	eating(t_data *philo)
 	taked = take_fork(philo, table);
 	if (taked && check_philo_alive(philo) && philo->n_philos > 1)
 		add_eat(philo);
-	if (taked)
+	if (taked || philo->n_philos == 1)
 	{
-		pthread_mutex_unlock(&table[philo->id].mutex);
+		pthread_mutex_unlock(&table[philo->rigth].mutex);
 		if (philo->n_philos > 1)
-			pthread_mutex_unlock(&table[philo->rigth].mutex);
+			pthread_mutex_unlock(&table[philo->id].mutex);
 	}
 }
 
@@ -84,6 +82,6 @@ void	sleeping(t_data *philo)
 	time = time_ms(philo->start);
 	if (!check_monitor(monitor) || !check_philo_alive(philo))
 		return ;
-	printf(YELLOW "%lld %d is sleeping\n" END, time, philo->id);
+	print_logs(philo, SLEEPING);
 	usleep(philo->time_to_sleep * 1000);
 }

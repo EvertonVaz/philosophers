@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etovaz <etovaz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:00:42 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/21 12:19:53 by etovaz           ###   ########.fr       */
+/*   Updated: 2024/04/23 17:44:03 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,15 @@ long long int	time_ms(long long start)
 	return (((time.tv_sec * 1000000 + time.tv_usec) / 1000) - start);
 }
 
-int	check_monitor(t_monitor *monitor)
+void	print_logs(t_data *philo, char *msg)
 {
-	int	alive;
+	t_monitor	*monitor;
 
-	pthread_mutex_lock(&monitor->block);
-	alive = monitor->everyone_is_alive;
-	pthread_mutex_unlock(&monitor->block);
-	return (alive);
+
+	monitor = monitor_address(NULL);
+	pthread_mutex_lock(&philo->print);
+	printf("%lld %d %s\n", time_ms(philo->start), philo->id, msg);
+	pthread_mutex_unlock(&philo->print);
 }
 
 int	main(int argc, char *argv[])

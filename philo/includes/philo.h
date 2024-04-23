@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:01:30 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/23 09:54:57 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/23 17:48:06 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,11 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-# define BLUE "\033[34;1m"
-# define CYAN "\033[36;1;3;208m"
-# define GREEN "\033[32;1m"
-# define YELLOW "\033[33;1m"
-# define RED "\033[31;1m"
-# define END "\033[0m"
+# define TAKE_FORK "🍽  \033[1;37mhas taken a fork"
+# define EATING "🍝 \033[1;33mis eating\033[0m"
+# define SLEEPING "💤 \033[1;36mis sleeping\033[0m"
+# define THINKING "💡 \033[1;35mis thinking\033[0m"
+# define DIED "💀 \033[1;31mdied\033[0m"
 
 typedef struct s_monitor
 {
@@ -51,6 +50,7 @@ typedef struct s_data
 	int				im_dead;
 	int				rigth;
 	pthread_mutex_t	mutex;
+	pthread_mutex_t	print;
 }					t_data;
 
 int					ft_isdigit(int c);
@@ -74,5 +74,6 @@ void				add_eat(t_data *philo);
 int					take_fork(t_data *philo, t_data *table);
 int					lock_fork(t_data *philo, pthread_mutex_t *first,
 						pthread_mutex_t *last);
+void				print_logs(t_data *philo, char *msg);
 
 #endif

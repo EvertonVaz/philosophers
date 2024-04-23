@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:06:47 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/23 15:51:26 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/23 17:47:40 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ t_data	*init_data(char **argv, int n_philos, long long start)
 		table[i].rigth = i;
 		if (table[i].id == 1)
 			table[i].rigth = n_philos;
-		if(pthread_mutex_init(&table[i].mutex, NULL) != 0)
-			exit(1);
+		pthread_mutex_init(&table[i].mutex, NULL);
+		pthread_mutex_init(&table[i].print, NULL);
 		i++;
 	}
 	return (philosophers(table));
@@ -63,14 +63,14 @@ void	*philo_routine(void *data)
 	{
 		if (check_philo_alive(philo))
 			eating(philo);
-		if (philo->max_eat > 0 && philo->n_eat == philo->max_eat)
+		if ((philo->max_eat > 0 && philo->n_eat == philo->max_eat)
+			|| philo->n_philos <= 1)
 			return (NULL);
-		if (check_philo_alive(philo) && philo->n_philos > 1)
+		if (check_philo_alive(philo))
 			sleeping(philo);
 		time = time_ms(philo->start);
-		if (check_monitor(monitor) && check_philo_alive(philo)
-			&& philo->n_philos > 1)
-			printf(GREEN "%lld %d is thinking\n" END, time, philo->id);
+		if (check_monitor(monitor) && check_philo_alive(philo))
+			print_logs(philo, THINKING);
 	}
 	return (NULL);
 }

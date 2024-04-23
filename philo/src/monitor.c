@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:18:57 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/23 15:39:46 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/23 17:45:34 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	is_somebody_dead(t_monitor *monitor)
 			monitor->everyone_is_alive = 0;
 			time = time_ms(table[i].start);
 			id = table[i].id;
-			printf(RED "%lld %d died\n" END, time, id);
+			print_logs(&table[i], DIED);
 			pthread_mutex_unlock(&monitor->block);
 			return (1);
 		}
@@ -73,20 +73,18 @@ void	*monitor_routine(void *data)
 {
 	t_monitor	*monitor;
 	t_data		*table;
-	int			wait;
 
 	table = philosophers(NULL);
 	monitor = monitor_address(NULL);
 	monitor->everyone_is_ate = 0;
 	pthread_mutex_lock(&monitor->block);
 	monitor->everyone_is_alive = 1;
-	wait = table[0].time_to_die / table[0].n_philos;
 	monitor->max_eat = table->max_eat * table->n_philos;
 	pthread_mutex_unlock(&monitor->block);
 	(void)data;
 	while (1)
 	{
-		usleep(wait);
+		usleep(1000);
 		if (is_somebody_dead(monitor))
 			return (NULL);
 		if (everyone_ate(monitor))

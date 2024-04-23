@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 09:01:14 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/23 15:53:27 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/23 17:43:52 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,11 @@
 
 int	lock_fork(t_data *philo, pthread_mutex_t *first, pthread_mutex_t *last)
 {
-	t_monitor	*monitor;
-	long long	t;
-	char		*msg;
-
-	msg = "has taken a fork";
-	t = philo->start;
-	monitor = monitor_address(NULL);
-	if (check_monitor(monitor))
+	if (check_philo_alive(philo))
 	{
 		pthread_mutex_lock(first);
 		if (check_philo_alive(philo))
-			printf(CYAN "%lld %d %s\n" END, time_ms(t), philo->id, msg);
+			print_logs(philo, TAKE_FORK);
 		if (philo->n_philos == 1)
 		{
 			usleep(philo->time_to_die * 1000);
@@ -33,7 +26,7 @@ int	lock_fork(t_data *philo, pthread_mutex_t *first, pthread_mutex_t *last)
 		}
 		pthread_mutex_lock(last);
 		if (check_philo_alive(philo))
-			printf(CYAN "%lld %d %s\n" END, time_ms(t), philo->id, msg);
+			print_logs(philo, TAKE_FORK);
 		return (1);
 	}
 	return (0);
@@ -53,9 +46,6 @@ int	take_fork(t_data *philo, t_data *table)
 	if (philo->id % 2 == 1 && check_philo_alive(philo))
 		return (lock_fork(philo, right, left));
 	else if (check_philo_alive(philo))
-	{
-		usleep(philo->time_to_eat * 10);
 		return (lock_fork(philo, left, right));
-	}
 	return (0);
 }
