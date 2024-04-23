@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:18:57 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/23 10:26:54 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/23 14:09:23 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,15 @@ t_monitor	*monitor_address(t_monitor *monitor)
 	return (m);
 }
 
-int	is_somebody_dead(t_monitor *monitor, int i)
+int	is_somebody_dead(t_monitor *monitor)
 {
 	t_data		*table;
 	long long	time;
 	int			id;
+	int			i;
 
 	table = philosophers(NULL);
+	i = 0;
 	while (i < table[0].n_philos)
 	{
 		if (is_dead(&table[i]))
@@ -71,20 +73,21 @@ void	*monitor_routine(void *data)
 {
 	t_monitor	*monitor;
 	t_data		*table;
-	int			i;
+	int			wait;
 
 	table = philosophers(NULL);
 	monitor = monitor_address(NULL);
 	monitor->everyone_is_ate = 0;
 	pthread_mutex_lock(&monitor->block);
 	monitor->everyone_is_alive = 1;
-	pthread_mutex_unlock(&monitor->block);
+	wait = table[0].time_to_die / table[0].n_philos;
 	monitor->max_eat = table->max_eat * table->n_philos;
+	pthread_mutex_unlock(&monitor->block);
 	(void)data;
 	while (1)
 	{
-		i = 0;
-		if (is_somebody_dead(monitor, i))
+		usleep(wait);
+		if (is_somebody_dead(monitor))
 			return (NULL);
 		if (everyone_ate(monitor))
 			return (NULL);
