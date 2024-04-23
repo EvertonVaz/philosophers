@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:06:47 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/23 09:36:17 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/23 10:01:56 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_data	*init_data(char **argv, int n_philos, long long start)
 		if (table[i].id == 1)
 			table[i].rigth = n_philos;
 		if(pthread_mutex_init(&table[i].mutex, NULL) != 0)
-			printf("\n id: %d mutex not init \n", i + 1);
+			exit(1);
 		i++;
 	}
 	return (philosophers(table));
@@ -59,8 +59,6 @@ void	*philo_routine(void *data)
 	monitor = monitor_address(NULL);
 	philo = (t_data *)data;
 	time = time_ms(0);
-	while (wait_all_philos(monitor, 1, philo->n_philos))
-		;
 	while (check_philo_alive(philo))
 	{
 		if (check_philo_alive(philo))

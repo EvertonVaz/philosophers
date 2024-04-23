@@ -6,24 +6,11 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 18:34:02 by etovaz            #+#    #+#             */
-/*   Updated: 2024/04/23 09:42:15 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/23 09:54:37 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
-
-int	wait_all_philos(t_monitor *monitor, int new_philo, int n_philos)
-{
-	static int	philo_created;
-
-	pthread_mutex_lock(&monitor->block);
-	philo_created += new_philo;
-	usleep(100);
-	pthread_mutex_unlock(&monitor->block);
-	if (philo_created <= n_philos)
-		return (0);
-	return (1);
-}
 
 int	check_philo_alive(t_data *philo)
 {

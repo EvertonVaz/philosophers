@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:18:57 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/22 16:58:22 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/23 09:54:00 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ void	*monitor_routine(void *data)
 	pthread_mutex_unlock(&monitor->block);
 	monitor->max_eat = table->max_eat * table->n_philos;
 	(void)data;
-	while (wait_all_philos(monitor, 0, table->n_philos))
-		;
 	while (1)
 	{
 		i = 0;

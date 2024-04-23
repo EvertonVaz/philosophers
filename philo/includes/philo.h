@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:01:30 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/23 09:23:28 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/23 09:54:57 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,15 @@ void				eating(t_data *philo);
 void				sleeping(t_data *philo);
 t_data				*init_data(char **argv, int n_philos, long long start);
 t_data				*philosophers(t_data *philos);
-int					wait_all_philos(t_monitor *monitor, int new_philo,
-						int n_philos);
 void				create_philos(t_data *philos, int n_philos);
 int					is_alive(t_data *philo);
 t_monitor			*monitor_address(t_monitor *monitor);
 void				*monitor_routine(void *data);
 int					check_monitor(t_monitor *monitor);
 int					check_philo_alive(t_data *philo);
+void				add_eat(t_data *philo);
 int					take_fork(t_data *philo, t_data *table);
 int					lock_fork(t_data *philo, pthread_mutex_t *first,
 						pthread_mutex_t *last);
-void				add_eat(t_data *philo);
 
 #endif
