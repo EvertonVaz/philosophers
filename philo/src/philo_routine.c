@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 18:34:02 by etovaz            #+#    #+#             */
-/*   Updated: 2024/04/24 13:37:30 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/24 13:56:34 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ int	check_philo_alive(t_data *philo)
 	pthread_mutex_lock(&monitor->alive);
 	time = time_ms(philo->time_after_eat);
 	time_to_die = philo->time_to_die;
-	if (time > time_to_die)
-		philo->im_dead = 1;
 	result = (time < time_to_die && monitor->everyone_is_alive);
 	pthread_mutex_unlock(&monitor->alive);
 	return (result);

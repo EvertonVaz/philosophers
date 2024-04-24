@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:22:18 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/24 11:32:57 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/24 13:56:38 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ t_data	*init_data(char **argv, int n_philos, long long start)
 		table[i].max_eat = ft_atol(argv[3]);
 		table[i].time_after_eat = start;
 		table[i].n_eat = 0;
-		table[i].im_dead = 0;
 		table[i].rigth = i;
 		if (table[i].id == 1)
 			table[i].rigth = n_philos;

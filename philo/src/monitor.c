@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:18:57 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/24 11:32:57 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/24 14:04:55 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	*monitor_routine(void *data)
 	(void)data;
 	while (1)
 	{
-		usleep(1000);
+		usleep(200);
 		if (is_somebody_dead(monitor))
 			return (NULL);
 		if (everyone_ate(monitor))

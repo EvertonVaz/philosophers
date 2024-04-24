@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:01:30 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/24 11:33:12 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/24 13:56:42 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ typedef struct s_data
 	int				max_eat;
 	int				n_eat;
 	int				n_philos;
-	int				im_dead;
 	pthread_mutex_t	mutex;
 }					t_data;
 
