@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:01:30 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/23 17:48:06 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/24 11:33:12 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ typedef struct s_monitor
 	int				everyone_is_alive;
 	int				everyone_is_ate;
 	int				max_eat;
-	pthread_mutex_t	block;
+	pthread_mutex_t	print;
+	pthread_mutex_t	alive;
 }					t_monitor;
 
 typedef struct s_data
@@ -40,6 +41,7 @@ typedef struct s_data
 	pthread_t		philo;
 	long long		start;
 	int				id;
+	int				rigth;
 	long long		time_to_die;
 	long long		time_to_eat;
 	long long		time_after_eat;
@@ -48,11 +50,13 @@ typedef struct s_data
 	int				n_eat;
 	int				n_philos;
 	int				im_dead;
-	int				rigth;
 	pthread_mutex_t	mutex;
-	pthread_mutex_t	print;
 }					t_data;
 
+t_data				*init_data(char **argv, int n_philos, long long start);
+t_data				*philosophers(t_data *philos);
+t_monitor			*monitor_address(t_monitor *monitor);
+t_monitor			*init_monitor(void);
 int					ft_isdigit(int c);
 int					ft_isnum(char *str);
 long				ft_atol(const char *str);
@@ -62,16 +66,13 @@ int					check_args(int argc, char **argv);
 long long int		time_ms(long long start);
 void				eating(t_data *philo);
 void				sleeping(t_data *philo);
-t_data				*init_data(char **argv, int n_philos, long long start);
-t_data				*philosophers(t_data *philos);
 void				create_philos(t_data *philos, int n_philos);
 int					is_alive(t_data *philo);
-t_monitor			*monitor_address(t_monitor *monitor);
 void				*monitor_routine(void *data);
 int					check_monitor(t_monitor *monitor);
 int					check_philo_alive(t_data *philo);
 void				add_eat(t_data *philo);
-int					take_fork(t_data *philo, t_data *table);
+int					take_fork(t_data *philo);
 int					lock_fork(t_data *philo, pthread_mutex_t *first,
 						pthread_mutex_t *last);
 void				print_logs(t_data *philo, char *msg);

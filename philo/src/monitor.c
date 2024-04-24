@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:18:57 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/23 17:45:34 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/24 11:32:57 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,10 @@ int	is_dead(t_data *philo)
 	t_monitor	*monitor;
 
 	monitor = monitor_address(NULL);
-	pthread_mutex_lock(&monitor->block);
+	pthread_mutex_lock(&monitor->alive);
 	is_dead = time_ms(philo->time_after_eat) > philo->time_to_die;
-	pthread_mutex_unlock(&monitor->block);
+	pthread_mutex_unlock(&monitor->alive);
 	return (is_dead);
-}
-
-t_monitor	*monitor_address(t_monitor *monitor)
-{
-	static t_monitor	*m;
-
-	if (!m)
-		m = monitor;
-	return (m);
 }
 
 int	is_somebody_dead(t_monitor *monitor)
@@ -46,12 +37,12 @@ int	is_somebody_dead(t_monitor *monitor)
 	{
 		if (is_dead(&table[i]))
 		{
-			pthread_mutex_lock(&monitor->block);
+			pthread_mutex_lock(&monitor->alive);
 			monitor->everyone_is_alive = 0;
 			time = time_ms(table[i].start);
 			id = table[i].id;
 			print_logs(&table[i], DIED);
-			pthread_mutex_unlock(&monitor->block);
+			pthread_mutex_unlock(&monitor->alive);
 			return (1);
 		}
 		i++;
@@ -63,24 +54,17 @@ int	everyone_ate(t_monitor *monitor)
 {
 	int	ate;
 
-	pthread_mutex_lock(&monitor->block);
+	pthread_mutex_lock(&monitor->alive);
 	ate = monitor->everyone_is_ate;
-	pthread_mutex_unlock(&monitor->block);
+	pthread_mutex_unlock(&monitor->alive);
 	return (monitor->max_eat > 0 && ate >= monitor->max_eat);
 }
 
 void	*monitor_routine(void *data)
 {
 	t_monitor	*monitor;
-	t_data		*table;
 
-	table = philosophers(NULL);
 	monitor = monitor_address(NULL);
-	monitor->everyone_is_ate = 0;
-	pthread_mutex_lock(&monitor->block);
-	monitor->everyone_is_alive = 1;
-	monitor->max_eat = table->max_eat * table->n_philos;
-	pthread_mutex_unlock(&monitor->block);
 	(void)data;
 	while (1)
 	{

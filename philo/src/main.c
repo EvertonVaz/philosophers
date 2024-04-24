@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:00:42 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/23 17:59:18 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/24 13:28:54 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,37 +24,38 @@ int	check_monitor(t_monitor *monitor)
 {
 	int	alive;
 
-	pthread_mutex_lock(&monitor->block);
+	pthread_mutex_lock(&monitor->alive);
 	alive = monitor->everyone_is_alive;
-	pthread_mutex_unlock(&monitor->block);
+	pthread_mutex_unlock(&monitor->alive);
 	return (alive);
 }
 
 void	print_logs(t_data *philo, char *msg)
 {
-	pthread_mutex_lock(&philo->print);
+	t_monitor	*monitor;
+
+	monitor = monitor_address(NULL);
+	pthread_mutex_lock(&monitor->print);
 	printf("%lld %d %s\n", time_ms(philo->start), philo->id, msg);
-	pthread_mutex_unlock(&philo->print);
+	pthread_mutex_unlock(&monitor->print);
 }
 
 int	main(int argc, char *argv[])
 {
-	t_data		*philos;
+	t_data		*table;
 	t_monitor	*monitor;
 	int			n_philos;
 
 	if (check_args(argc, argv))
 		return (1);
-	monitor = malloc(1 * sizeof(t_monitor));
-	monitor = monitor_address(monitor);
-	pthread_mutex_init(&monitor->block, NULL);
 	n_philos = ft_atol(argv[1]);
-	philos = init_data(&argv[2], n_philos, time_ms(0));
+	table = init_data(&argv[2], n_philos, time_ms(0));
+	monitor = init_monitor();
 	pthread_create(&monitor->monitor, NULL, monitor_routine, &n_philos);
 	usleep(10);
-	create_philos(philos, n_philos);
+	create_philos(table, n_philos);
 	pthread_join(monitor->monitor, NULL);
 	free(monitor);
-	free(philos);
+	free(table);
 	return (0);
 }

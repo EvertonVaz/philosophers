@@ -6,7 +6,7 @@
 #    By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/03 10:31:00 by egeraldo          #+#    #+#              #
-#    Updated: 2024/04/23 14:29:19 by egeraldo         ###   ########.fr        #
+#    Updated: 2024/04/24 10:40:53 by egeraldo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ MANDATORY_SOURCES_PATH = ./src/
 INCLUDES_PATH = ./includes/
 
 MANDATORY_SOURCES = \
-	main.c error.c utils.c philo_routine.c philosophers.c monitor.c fork.c
+	main.c error.c utils.c philo_routine.c philosophers.c monitor.c fork.c init_data.c
 
 OBJECTS = $(addprefix $(BIN_PATH), $(MANDATORY_SOURCES:%.c=%.o))
 

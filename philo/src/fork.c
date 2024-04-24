@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 09:01:14 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/23 17:43:52 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/24 11:22:11 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,25 @@ int	lock_fork(t_data *philo, pthread_mutex_t *first, pthread_mutex_t *last)
 	return (0);
 }
 
-int	take_fork(t_data *philo, t_data *table)
+int	take_fork(t_data *philo)
 {
+	t_data			*table;
 	t_monitor		*monitor;
 	pthread_mutex_t	*right;
 	pthread_mutex_t	*left;
 
 	monitor = monitor_address(NULL);
-	if (!monitor->everyone_is_alive)
+	table = philosophers(NULL);
+	if (!check_monitor(monitor))
 		return (0);
-	right = &table[philo->rigth].mutex;
-	left = &table[philo->id].mutex;
+	right = &table[philo->rigth - 1].mutex;
+	left = &table[philo->id - 1].mutex;
 	if (philo->id % 2 == 1 && check_philo_alive(philo))
 		return (lock_fork(philo, right, left));
 	else if (check_philo_alive(philo))
+	{
+		usleep(philo->time_to_eat * 1000 / philo->n_philos);
 		return (lock_fork(philo, left, right));
+	}
 	return (0);
 }
