@@ -6,17 +6,23 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:01:30 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/24 17:06:48 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:07:36 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
+# include <errno.h>
+# include <fcntl.h>
 # include <limits.h>
 # include <pthread.h>
+# include <semaphore.h>
+# include <signal.h>
+# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 # include <sys/time.h>
 # include <sys/wait.h>
 # include <unistd.h>
@@ -39,9 +45,12 @@ typedef struct s_data
 	int			max_eat;
 	int			n_eat;
 	int			n_philos;
+	sem_t		*forks;
+	sem_t		*alive;
+	sem_t		*print;
 }				t_data;
 
-t_data			*init_data(char **argv, int n_philos, long long start);
+void			*init_data(char **argv, t_data *philo, long long start);
 t_data			*philosophers(t_data *philos);
 int				ft_isdigit(int c);
 int				ft_isnum(char *str);
@@ -52,14 +61,12 @@ int				check_args(int argc, char **argv);
 long long int	time_ms(long long start);
 void			eating(t_data *philo);
 void			sleeping(t_data *philo);
-void			create_philos(t_data *philos, int n_philos);
+void			create_philos(int n_philos);
 int				is_alive(t_data *philo);
-void			*monitor_routine(void *data);
 int				check_philo_alive(t_data *philo);
 void			add_eat(t_data *philo);
 int				take_fork(t_data *philo);
-int				lock_fork(t_data *philo, pthread_mutex_t *first,
-					pthread_mutex_t *last);
+int				lock_fork(t_data *philo);
 void			print_logs(t_data *philo, char *msg);
 
 #endif
