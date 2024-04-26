@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: etovaz <etovaz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 18:34:02 by etovaz            #+#    #+#             */
-/*   Updated: 2024/04/24 13:56:34 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/25 21:46:10 by etovaz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,8 @@ void	eating(t_data *philo)
 void	sleeping(t_data *philo)
 {
 	t_monitor	*monitor;
-	long long	time;
 
 	monitor = monitor_address(NULL);
-	time = time_ms(philo->start);
 	if (!check_monitor(monitor) || !check_philo_alive(philo))
 		return ;
 	print_logs(philo, SLEEPING);
