@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etovaz <etovaz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 18:34:02 by etovaz            #+#    #+#             */
-/*   Updated: 2024/04/25 21:54:06 by etovaz           ###   ########.fr       */
+/*   Updated: 2024/04/26 10:32:42 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,18 @@ int	check_philo_alive(t_data *philo)
 
 void	add_eat(t_data *philo)
 {
-	long long time;
-
-	time = philo->time_to_die - time_ms(philo->time_after_eat);
-	printf("time: %lld, time after eat: %lld, time to die: %lld\n", time, time_ms(philo->time_after_eat), philo->time_to_die);
 	if (check_philo_alive(philo))
 	{
 		print_logs(philo, EATING);
-		usleep(philo->time_to_eat * 1000);
-		philo->time_after_eat = time_ms(0);
 		philo->n_eat++;
+		philo->time_after_eat = time_ms(0);
+		usleep(philo->time_to_eat * 1000);
 	}
 }
 
 void	eating(t_data *philo)
 {
-	int		taked;
+	int	taked;
 
 	taked = take_fork(philo);
 	if (taked && philo->n_philos > 1)
@@ -57,9 +53,8 @@ void	eating(t_data *philo)
 
 void	sleeping(t_data *philo)
 {
-
 	if (!check_philo_alive(philo))
-		return;
+		return ;
 	print_logs(philo, SLEEPING);
 	usleep(philo->time_to_sleep * 1000);
 }

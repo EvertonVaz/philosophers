@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:01:30 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/25 16:07:36 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/26 10:36:16 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_data
 {
 	long long	start;
 	int			id;
+	pid_t		*pid;
 	int			rigth;
 	long long	time_to_die;
 	long long	time_to_eat;

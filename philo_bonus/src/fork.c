@@ -6,7 +6,7 @@
 /*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 09:01:14 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/25 18:00:21 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/26 09:43:43 by egeraldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	take_fork(t_data *philo)
 		return (lock_fork(philo));
 	else if (check_philo_alive(philo))
 	{
-		usleep(philo->time_to_eat * 100);
+		usleep(philo->time_to_eat);
 		return (lock_fork(philo));
 	}
 	return (0);
