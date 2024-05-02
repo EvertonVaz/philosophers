@@ -25,6 +25,7 @@ O problema surge quando pensamos na sincronização do acesso aos garfos. Se os 
 A versão obrigatória utiliza threads e mutexes para sincronizar o acesso aos garfos. O programa pode ser compilado e executado usando o seguinte comando:
 
 ```
+git clone https://github.com/EvertonVaz/philosophers.git && cd philosophers/philo
 make
 ```
 
@@ -47,7 +48,8 @@ use o seguinte comando:
 A versão bônus utiliza processos e semáforos para sincronização. O programa pode ser compilado e executado usando o seguinte comando:
 
 ```
-make bonus
+cd /philo_bonus/
+make
 ```
 
 Para executar o programa com os mesmos parâmetros da parte obrigatória, use o seguinte comando:
