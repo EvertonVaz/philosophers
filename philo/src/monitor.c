@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: etovaz <etovaz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:18:57 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/24 14:04:55 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/25 21:47:26 by etovaz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ int	is_dead(t_data *philo)
 int	is_somebody_dead(t_monitor *monitor)
 {
 	t_data		*table;
-	long long	time;
-	int			id;
 	int			i;
 
 	table = philosophers(NULL);
@@ -39,8 +37,6 @@ int	is_somebody_dead(t_monitor *monitor)
 		{
 			pthread_mutex_lock(&monitor->alive);
 			monitor->everyone_is_alive = 0;
-			time = time_ms(table[i].start);
-			id = table[i].id;
 			print_logs(&table[i], DIED);
 			pthread_mutex_unlock(&monitor->alive);
 			return (1);

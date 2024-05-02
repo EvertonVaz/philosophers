@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egeraldo <egeraldo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: etovaz <etovaz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:06:47 by egeraldo          #+#    #+#             */
-/*   Updated: 2024/04/24 11:22:54 by egeraldo         ###   ########.fr       */
+/*   Updated: 2024/04/25 21:46:56 by etovaz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@ void	*philo_routine(void *data)
 {
 	t_data		*philo;
 	t_monitor	*monitor;
-	long long	time;
 
 	monitor = monitor_address(NULL);
 	philo = (t_data *)data;
-	time = time_ms(0);
 	while (check_philo_alive(philo))
 	{
 		if (check_monitor(monitor) && check_philo_alive(philo))
@@ -30,7 +28,6 @@ void	*philo_routine(void *data)
 			return (NULL);
 		if (check_monitor(monitor) && check_philo_alive(philo))
 			sleeping(philo);
-		time = time_ms(philo->start);
 		if (check_monitor(monitor) && check_philo_alive(philo))
 			print_logs(philo, THINKING);
 	}

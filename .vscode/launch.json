@@ -7,8 +7,8 @@
 		"name": "(gdb) Launch",
 		"type": "cppdbg",
 		"request": "launch",
-		"program": "${workspaceFolder}/philo/philo",
-		"args": ["2", "1000000", "100", "100", "3"],
+		"program": "${workspaceFolder}/philo_bonus/philo_bonus",
+		"args": ["3", "10000", "100", "100", "3"],
 		"stopAtEntry": false,
 		"cwd": "${fileDirname}",
 		"environment": [],
@@ -23,6 +23,14 @@
 			{
 				"description": "Set Disassembly Flavor to Intel",
 				"text": "-gdb-set disassembly-flavor intel",
+				"ignoreFailures": true
+			},
+			{   "description":"In this mode GDB will be attached to both processes after a call to fork() or vfork().",
+				"text": "-gdb-set detach-on-fork off",
+				"ignoreFailures": true
+			},
+			{   "description": "The new process is debugged after a fork. The parent process runs unimpeded.",
+				"text": "-gdb-set follow-fork-mode child",
 				"ignoreFailures": true
 			}
 		]
